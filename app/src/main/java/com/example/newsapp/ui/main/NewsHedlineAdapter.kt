@@ -11,31 +11,37 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
 import com.example.newsapp.data.response.ArticlesItem
 
-class NewsAdapter(private val listener: (ArticlesItem) -> Unit)  :
-    RecyclerView.Adapter<NewsAdapter.ViewHolder>(){
+class NewsHedlineAdapter (private val listener: (ArticlesItem) -> Unit) :
+    RecyclerView.Adapter<NewsHedlineAdapter.ViewHolder>() {
 
-        private var news = listOf<ArticlesItem>()
+    private var newsHeadline = listOf<ArticlesItem>()
 
-    fun setNews (news: List<ArticlesItem>){
-        this.news = news
+    fun setNewsHeadline (news: List<ArticlesItem>){
+        this.newsHeadline = news
         notifyDataSetChanged()
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): NewsHedlineAdapter.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_headline_news, parent, false)
         return  ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return news.size
+
+
+    override fun onBindViewHolder(holder: NewsHedlineAdapter.ViewHolder, position: Int) {
+        holder.bind(newsHeadline[position])
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(news[position])
+    override fun getItemCount(): Int {
+        return newsHeadline.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
-        private val ivNews: ImageView = itemView.findViewById(R.id.ivNews)
+        private val tvTitle: TextView = itemView.findViewById(R.id.tvTitleHeadline)
+        private val ivNews: ImageView = itemView.findViewById(R.id.ivNewsHeadline)
 
         fun bind(article: ArticlesItem) {
             tvTitle.text = article.title
